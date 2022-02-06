@@ -1,0 +1,18 @@
+use [bdhw final]
+
+SELECT 
+	distinct a.NAME_OF_PROFESSION,
+	COUNT(c.ID_CODEPROF)  as Num,
+	ROW_NUMBER() OVER (order by NAME_OF_PROFESSION) as kek,
+	MAX(b.PLAN_PRICE) as maxvalue,
+	MIN(c.NB_OPER) as razryad
+
+FROM Directory_of_professions as a 
+	
+	join PARTS_PROFESSION as c
+	ON c.ID_CODEPROF = a.ID_CODEPROF
+
+	join Directory_of_parts as  b 
+	ON b.KOD_PARTS=c.KOD_PARTS
+
+	group by a.NAME_OF_PROFESSION
