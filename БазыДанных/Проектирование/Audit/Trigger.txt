@@ -1,0 +1,18 @@
+CREATE TRIGGER ID_Employees ON Employees
+
+AFTER INSERT AS
+
+BEGIN
+
+DECLARE @Number BIT; 
+DECLARE @Varchar VARCHAR;
+
+UPDATE Employees
+
+SET @Number = (SELECT audit_worker FROM INSERTED)
+SET @Varchar = (SELECT a.category FROM Categories a,Employees b WHERE a.category=b.category)
+
+
+IF @Number = 0 and @Varchar = null 
+	PRINT 'Не выбрана категория'  
+END

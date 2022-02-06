@@ -1,0 +1,41 @@
+CREATE FUNCTION Get_sum_count_func_table(
+@name NVARCHAR(30))
+RETURNS TABLE AS
+
+RETURN (SELECT a.NB_OPER, m.PLAN_PRICE, (a.NB_OPER * m.PLAN_PRICE) answer
+FROM PARTS_PROFESSION a ,Directory_of_parts m
+WHERE a.KOD_PARTS = m.KOD_PARTS and m.NAME=@name)
+
+
+
+SELECT *
+FROM dbo.Get_sum_count_func_table('ivy')
+
+
+
+ТАБЛИЧНАЯ 
+
+
+_____________________________________________________
+
+
+
+СКАЛЯРНАЯ
+
+
+
+CREATE FUNCTION Get_sum_count_func(
+@name NVARCHAR(30))
+RETURNS decimal(14,2) AS
+BEGIN
+RETURN (SELECT a.NB_OPER * m.PLAN_PRICE
+FROM PARTS_PROFESSION a ,Directory_of_parts m
+WHERE a.KOD_PARTS = m.KOD_PARTS and m.NAME=@name)
+END
+
+
+SELECT dbo.Get_sum_count_func('ivy')
+
+
+
+

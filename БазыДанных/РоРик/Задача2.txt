@@ -1,0 +1,73 @@
+Задача-2. Все профессии, такие что: 
+для каждой детали с ценой > 100
+имеется операция по её сборке, которую должен выполнять рабочий этой профессии с разрядом >4. 
+
+Directory_of_parts( KOD_PARTS , PLAN_PRICE ) 				[KOD_PARTS](Directory_of_parts)
+
+Directory_of_professions( ID_CODEPROF , NAME_OF_PROFESSION ) 		[ID_CODEPROF](Directory_of_professions)
+
+PARTS_PROFESSION( ID_CODEPROF , KOD_PARTS , NB_OPER,RAZRYAD )		[ID_CODEPROF , KOD_PARTS](PARTS_PROFESSION)	
+
+Задача-2. Все профессии, такие что: 
+для каждой детали с ценой > 100 
+имеется операция по её сборке, которую должен выполнять рабочий этой профессии с разрядом >4. 
+
+	Запрос:
+	
+	select 	c.NAME_OF_PROFESSION from Directory_of_professions c 
+	where not exists (select * from Directory_of_parts p
+	where (p.PLAN_PRICE > 100) and 
+	not exists (select * from PARTS_PROFESSION o
+	where (o.ID_CODEPROF = c.ID_CODEPROF) and (p.KOD_PARTS = o.KOD_PARTS) and (o.RAZRYAD >4) )
+
+
+
+
+
+	РА:
+	 	 [NAME_OF_PROFESSION](Directory_of_professions)*( [ID_CODEPROF , KOD_PARTS][RAZRYAD > 4](PARTS_PROFESSION) / [KOD_PARTS][PLAN_PRICE > 100](Directory_of_parts) ) )
+
+	РИК:
+
+
+Найти {c.NAME_OF_PROFESSION | c in Directory_of_professions} forall {p in Directory_of_parts} (p.PLAN_PRICE > 100) ->
+Exists (o in PARTS_PROFESSION)(o.ID_CODEPROF = c.ID_CODEPROF)& (p.KOD_PARTS = o.KOD_PARTS) & (o.RAZRYAD >4)
+
+Найти {c.NAME_OF_PROFESSION | c in Directory_of_professions} forall {p in Directory_of_parts} (p.PLAN_PRICE <= 100) V
+Exists (o in PARTS_PROFESSION)(o.ID_CODEPROF = c.ID_CODEPROF) & (p.KOD_PARTS = o.KOD_PARTS) & (o.RAZRYAD >4)
+
+Найти {c.NAME_OF_PROFESSION | c in Directory_of_professions} not exist {p in Directory_of_parts} (p.PLAN_PRICE > 100) &
+not exist (o in PARTS_PROFESSION)(o.ID_CODEPROF = c.ID_CODEPROF) & (p.KOD_PARTS = o.KOD_PARTS) & (o.RAZRYAD >4)
+
+
+
+
+
+
+
+
+
+
+
+select NAME_OF_PROFESSION from dbo.Directory_of_professions 
+where EXISTS(
+		select KOD_PARTS from dbo.Directory_of_parts 
+		where PLAN_PRICE > 100 and ID_CODEPROF=ALL(select ID_CODEPROF from dbo.PARTS_PROFESSION 
+							where RAZRYAD > 4))
+------------------------------------
+
+	
+select NAME_OF_PROFESSION from dbo.Directory_of_professions 
+where ID_CODEPROF = ALL(
+		select ID_CODEPROF from dbo.PARTS_PROFESSION 
+		where RAZRYAD > 4 and KOD_PARTS = ALL(
+							select KOD_PARTS from dbo.Directory_of_parts 
+							where PLAN_PRICE > 100 and NB_OPER IS NOT NULL))
+
+
+
+
+
+		НАЙТИ{(c.NAME_OF_PROFESSION) | c in Directory_of_professions}
+	здесь форалл надо	EXISTS(p in Directory_of_parts) p.PLAN_PRICE > 100 &
+				(EXISTS(o in PARTS_PROFESSION) o.NB_OPER != null & o.RAZRYAD >4)}

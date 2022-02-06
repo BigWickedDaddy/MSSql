@@ -1,0 +1,34 @@
+use audit 
+
+create table Categories(
+category VARCHAR(30) NOT NULL,
+rate INT
+
+PRIMARY KEY(category)
+)
+
+create table Employees(
+employee_code INT UNIQUE,
+full_name VARCHAR(30),
+pass_numbeer INT,
+date_of_birth DATE,
+phone_number INT,
+audit_worker BIT NOT NULL, 
+
+category VARCHAR(30),
+
+PRIMARY KEY(employee_code),
+
+CONSTRAINT FK_Employees1 FOREIGN KEY (category) REFERENCES Categories(category)
+)
+
+create table Work(
+company_name VARCHAR(30),
+employee_code INT NOT NULL,
+work_date DATE,
+hours_worked INT
+
+PRIMARY KEY(work_date),
+
+CONSTRAINT FK_Work1 FOREIGN KEY (employee_code) REFERENCES Employees(employee_code)
+)	

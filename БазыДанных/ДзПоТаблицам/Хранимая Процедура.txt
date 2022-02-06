@@ -1,0 +1,38 @@
+CREATE PROCEDURE SUM
+
+@NAME VARCHAR(30),
+
+@TARIF_COD int out
+
+AS
+
+BEGIN
+
+Select sum(TARIF_COD)
+
+From PARTS_PROFESSION w join Directory_of_parts m on w.KOD_PARTS=m.KOD_PARTS
+
+WHERE m.NAME= @NAME
+
+END
+
+
+
+-----------------
+CREATE PROCEDURE Get_Sum
+@name NVARCHAR(30),
+@TARIF_COD INT output
+AS
+BEGIN
+SELECT @TARIF_COD = (a.NB_OPER * m.PLAN_PRICE)
+FROM PARTS_PROFESSION a ,Directory_of_parts m
+WHERE a.KOD_PARTS = m.KOD_PARTS and m.NAME=@name
+END
+
+
+DEClARE @s decimal(14,2)
+SET @s = 100
+EXEC Get_sum 'ivy',
+@s out
+SELECT @s s
+

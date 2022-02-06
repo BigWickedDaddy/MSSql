@@ -1,0 +1,28 @@
+таблич
+
+CREATE FUNCTION Get_sum_table(
+@RAZRYAD NVARCHAR(30))
+RETURNS TABLE AS
+
+RETURN (SELECT a.PLAN_PRICE, m.ID_CODEPROF, (a.PLAN_PRICE * m.ID_CODEPROF) profit
+FROM Directory_of_parts a ,PARTS_PROFESSION m
+WHERE a.KOD_PARTS = m.KOD_PARTS AND m.RAZRYAD = @razryad)
+
+SELECT *
+FROM dbo.Get_sum_table('1')
+
+
+
+скаляр
+	
+CREATE FUNCTION Get_sum_func1(
+@RAZRYAD NVARCHAR(30))
+RETURNS INT AS
+BEGIN
+RETURN (SELECT PLAN_PRICE* m.ID_CODEPROF
+FROM Directory_of_parts a ,PARTS_PROFESSION m
+WHERE a.KOD_PARTS = m.KOD_PARTS AND m.RAZRYAD = @razryad)
+END
+
+
+SELECT dbo.Get_sum_func1()

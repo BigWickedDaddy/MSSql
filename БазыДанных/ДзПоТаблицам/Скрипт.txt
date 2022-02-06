@@ -1,0 +1,72 @@
+USE bdhw;
+
+alter table Directory_of_parts disable trigger all;
+alter table Directory_of_professions disable trigger all;
+alter table PARTS_PROFESSION disable trigger all;
+
+
+DELETE FROM Directory_of_parts;
+
+DELETE FROM Directory_of_professions;
+
+DELETE FROM PARTS_PROFESSION;
+
+SET IDENTITY_INSERT Directory_of_professions ON
+
+INSERT INTO Directory_of_professions(ID_CODEPROF,NAME_OF_PROFESSION)
+
+VALUES('1','nurse'),
+
+('2','student'),
+
+('3','officeworker'),
+
+('4','engineer');
+
+SET IDENTITY_INSERT Directory_of_professions OFF
+SET IDENTITY_INSERT Directory_of_parts ON
+
+INSERT INTO Directory_of_parts(KOD_PARTS,TYPEDET,NAME,ED_IZM, PLAN_PRICE)
+
+VALUES ('1000','tls1','bracken', 'sh', '1200'),
+
+('1001','tls2','ivy', 'sh', '1400'),
+
+('1002','tls3','bush', 'sh', '1600'),
+
+('1003','tls4','cactus', 'sh', '1800'),
+
+('1004','tls5','fern', 'sh', '1000'),
+
+('1005','tls6','ivy', 'sh', '999'),
+
+('1006','tls7','moss', 'sh', '99'),
+
+('1007','tls8','buttercup', 'sh', '1550');
+
+SET IDENTITY_INSERT Directory_of_parts OFF
+
+INSERT INTO PARTS_PROFESSION(ID_CODEPROF,KOD_PARTS,RAZRYAD,TARIF_COD,TIMEFIRST,TIMESECOND)
+
+VALUES
+
+('1','1000','первый','1','1','1'),
+
+('2','1001','второй','1','1','1'),
+
+('3','1002','третий','1','1','1'),
+
+('4','1003','четвертый','1','1','1'),
+
+('2','1004','первый','1','1','1'),
+
+('2','1005','второй','1','1','1'),
+
+('3','1006','третий','1','1','1'),
+
+('4','1007','четвертый','1','1','1');
+
+alter table Directory_of_parts enable trigger all;
+alter table Directory_of_professions enable trigger all;
+alter table PARTS_PROFESSION enabletrigger all;
+

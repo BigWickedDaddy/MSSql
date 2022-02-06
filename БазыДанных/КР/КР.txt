@@ -1,0 +1,60 @@
+use bdhw
+
+
+CREATE TABLE Directory_of_sites
+(
+workshop_number INT NOT NULL,
+
+lot_number INT NOT NULL,
+
+site_name VARCHAR(30),
+
+masters_personnel_number INT , 
+
+PRIMARY KEY (workshop_number,lot_number)
+);
+
+
+
+CREATE TABLE Personnel
+(
+
+worker_personnel_number bigINT IDENTITY(100,1) NOT NULL,
+
+workshop_number INT NOT NULL,
+
+lot_number INT NOT NULL,
+
+profession_code INT , 
+
+razryad INT,
+
+marital_status VARCHAR(30),
+
+full_name VARCHAR(30),
+
+
+
+PRIMARY KEY(worker_personnel_number),
+
+CONSTRAINT Personnel1 FOREIGN KEY (workshop_number,lot_number) REFERENCES Directory_of_sites(workshop_number,lot_number)
+
+);
+
+
+CREATE TABLE Salary
+(
+
+worker_personnel_number bigINT, 
+
+accrual_amount INT,
+
+deduction_amount INT,
+
+date_of_issue DATE,
+
+PRIMARY KEY(date_of_issue),
+
+CONSTRAINT Salary1 FOREIGN KEY (worker_personnel_number) REFERENCES Personnel (worker_personnel_number)
+
+);

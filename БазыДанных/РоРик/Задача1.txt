@@ -1,0 +1,73 @@
+Задача-1. Сведения об использовании профессий в заданной операции: код детали; номер операции; наименование профессии. 
+
+Directory_of_parts( KOD_PARTS , PLAN_PRICE ) 				[KOD_PARTS](Directory_of_parts)
+
+Directory_of_professions( ID_CODEPROF , NAME_OF_PROFESSION ) 		[ID_CODEPROF](Directory_of_professions)
+
+PARTS_PROFESSION( ID_CODEPROF , KOD_PARTS , NB_OPER,RAZRYAD )		[ID_CODEPROF , KOD_PARTS](PARTS_PROFESSION)	
+
+
+
+Задача-1. Сведения об использовании профессий в заданной операции: код детали; номер операции; наименование профессии. 
+
+	Запрос:
+
+select I.KOD_PARTS , I.NB_OPER , T.NAME_OF_PROFESSION FROM dbo.PARTS_PROFESSION as I join dbo.Directory_of_professions as T 
+on I.ID_CODEPROF = T.ID_CODEPROF and I.NB_OPER=1 
+
+	РА:
+			   	    
+
+[ID_CODEPROF , KOD_PARTS , NB_OPER ,NAME_OF_PROFESSION]( [NB_OPER = NUMBER](Directory_of_professions) * (PARTS_PROFESSION)) 
+
+	РИК:
+
+	Найти {(I.KOD_PARTS , I.NB_OPER, T.NAME_OF_PROFESSION) | T in Directory_of_professions,I in PARTS_PROFESSION}
+	(I.ID_CODEPROF = T.ID_CODEPROF) & (I.NB_OPER = NUMBER)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	РА:
+
+[name]( ( (Directory_of_professions) * [ID_CODEPROF , KOD_PARTS][NB_OPER='NUMBER'](PARTS_PROFESSION) )/ 
+					   	       ( [ID_CODEPROF](Directory_of_professions) ) )
+
+[name]( [ID_CODEPROF](Directory_of_professions)/ 
+			( (Directory_of_professions) * [ID_CODEPROF , KOD_PARTS , NB_OPER](PARTS_PROFESSION) ) )
+
+
+
+
+
+
+	НАЙТИ{ (p.KOD_PARTS)|p in PARTS_PROFESSION}
+		EXISTS (c in Directory_of_professions) p.KOD_PARTS=c.KOD_PARTS }
+	
+	НАЙТИ{ (p.NB_OPER)|p in PARTS_PROFESSION}
+		EXISTS (c in Directory_of_professions) p.KOD_PARTS=c.KOD_PARTS }
+
+	НАЙТИ{ (p.NAME_OF_PROFESSION)|p in Directory_of_professions}
+		EXISTS (c in PARTS_PROFESSION) p.KOD_PARTS=c.KOD_PARTS }
+
+ 	экзист работает только для 1
+
+
+
+
+
+
+
+

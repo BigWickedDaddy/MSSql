@@ -1,0 +1,6 @@
+1. Вывести наименования товаров, которые покупали все покупатели из Казани
+                                                 
+          [name] (Prod *  [id_prod->id]( ( [id_cust,id_prod](Ord) )   /   ( [id->id_cust][id][city='Kzn'](Cust)   ) ))
+
+	  [name] (Prod *  [id_prod->id]( ( [id_cust,id_prod](Ord) )   /   ( [id_cust][city='Kzn'](Cust)   ) ))
+		  (id ,name,price)   *		id

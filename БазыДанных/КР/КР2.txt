@@ -1,0 +1,21 @@
+
+ALTER TABLE Salary
+DROP constraint Salary1;
+
+
+ALTER TABLE Personnel
+DROP constraint PersonnelKey
+
+ALTER TABLE Personnel
+ALTER COLUMN worker_personnel_number bigint;
+
+ALTER TABLE Salary
+ALTER COLUMN worker_personnel_number bigint;
+
+
+ALTER TABLE Personnel
+ADD PRIMARY KEY(worker_personnel_number)
+
+ALTER TABLE Salary
+ADD CONSTRAINT Salary1 FOREIGN KEY (worker_personnel_number) REFERENCES Personnel (worker_personnel_number)
+
